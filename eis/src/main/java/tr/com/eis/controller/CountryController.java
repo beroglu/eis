@@ -1,7 +1,10 @@
 package tr.com.eis.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import org.apache.commons.lang3.StringUtils;
 import org.omg.PortableInterceptor.SUCCESSFUL;
@@ -42,10 +45,11 @@ public class CountryController {
 
 	@RequestMapping(value = "/country/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> findCountryById(@PathVariable("id") long id) { 
+		logger.info("findCountryById methoduna country/{} ile geldi. Tarih: {}",id,new Date());
 		Optional<Country> country = countryService.findById(id);
 		if(country.isPresent()) { // doluysa
 			return new ResponseEntity<Country>(country.get(), HttpStatus.OK);
-		}else { 
+		}else {  
 			return new ResponseEntity<ErrorResponse>(new ErrorResponse("404", "Bu id ile ülke bulunamadı."), HttpStatus.NOT_FOUND);
 		}
 		

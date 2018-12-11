@@ -6,7 +6,7 @@ import java.util.Optional;
 import tr.com.eis.entity.Country;
 
 public interface CountryService {
-	
+	//Optional<Country> her zaman tek bir veri döner
 	List<Country> findAll();
 	Optional<Country> findById(Long id);
 	Country save(Country country);
