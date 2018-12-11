@@ -10,7 +10,9 @@ import javax.persistence.TemporalType;
 
 @MappedSuperclass
 public class BaseEntity implements Serializable {
-	/**
+	/**@MappedSuperClass notasyonun 
+	 * kullanıldığı sınıflar entitiy olarak sayılmazlar ,
+	 *  veritabanında tablo olarak karşılıkları olmaz doğal olarakta sorgu yazılmaz.
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;

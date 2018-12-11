@@ -6,6 +6,7 @@ import java.util.Optional;
 import tr.com.eis.entity.Country;
 
 public interface CountryService {
+	
 	List<Country> findAll();
 	Optional<Country> findById(Long id);
 	Country save(Country country);
