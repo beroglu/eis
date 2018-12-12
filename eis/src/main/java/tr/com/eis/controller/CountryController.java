@@ -31,7 +31,7 @@ import tr.com.eis.service.CountryService;
 @RequestMapping("/api")
 public class CountryController {
 
-	public final Logger logger = LoggerFactory.getLogger(CountryController.class);
+	//public final Logger logger = LoggerFactory.getLogger(CountryController.class);
 	
 	@Autowired
 	CountryService countryService;
@@ -45,7 +45,7 @@ public class CountryController {
 
 	@RequestMapping(value = "/country/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> findCountryById(@PathVariable("id") long id) { 
-		logger.info("findCountryById methoduna country/{} ile geldi. Tarih: {}",id,new Date());
+		//logger.info("findCountryById methoduna country/{} ile geldi. Tarih: {}",id,new Date());
 		Optional<Country> country = countryService.findById(id);
 		if(country.isPresent()) { // doluysa
 			return new ResponseEntity<Country>(country.get(), HttpStatus.OK);

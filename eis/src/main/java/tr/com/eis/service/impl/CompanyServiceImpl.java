@@ -13,7 +13,7 @@ import tr.com.eis.entity.Country;
 import tr.com.eis.repository.CompanyRepository;
 import tr.com.eis.service.CompanyService;
 
-@Service("countryService")
+@Service("companyService")
 public class CompanyServiceImpl implements CompanyService {
 
 	private final CompanyRepository repository;
