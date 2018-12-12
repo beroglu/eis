@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tr.com.eis.entity.Company;
 import tr.com.eis.exception.ErrorResponse;
 import tr.com.eis.service.CompanyService;
+import tr.com.eis.service.CountryService;
 
 @RestController
 @CrossOrigin
@@ -29,6 +30,8 @@ public class CompanyController  {
 	
 	@Autowired
 	CompanyService companyService;
+	@Autowired
+	CountryService countryService;
 	
 	@RequestMapping(value="/company",method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public  ResponseEntity<List<Company>> listAllCompanies(){
@@ -37,6 +40,7 @@ public class CompanyController  {
 				
 	}
 	
+	@RequestMapping(value="company/{id}",method=RequestMethod.GET)
 	public ResponseEntity<?> findCompanyById(@PathVariable("id") long id ){
 		Optional<Company> company= companyService.findById(id);
 		if(company.isPresent()) {
@@ -62,6 +66,10 @@ public class CompanyController  {
 			}	
 			else if (StringUtils.isBlank(company.getTaxNumber())) {
 				return new ResponseEntity<ErrorResponse>(new ErrorResponse("302", "tax number alanı boş olamaz"),HttpStatus.BAD_REQUEST);
+			}
+			else if(!(countryService.findById(company.getCountry().getId()).isPresent())) {
+				
+				return new ResponseEntity<ErrorResponse>(new ErrorResponse("303", "bu country e ait kayıt bulunmamaktadır"),HttpStatus.NOT_FOUND);
 			}
 			
 			companyService.save(company);

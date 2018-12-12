@@ -56,7 +56,7 @@ public class CountryController {
 	}
 	
 
-	@RequestMapping(value = "/country", method = RequestMethod.GET)
+	@RequestMapping(value = "/countryById", method = RequestMethod.GET)
 	public ResponseEntity<?> findCountryByIdWithRequestParam(@RequestParam(name="id",defaultValue="5",required=false) long id) { 
 		Optional<Country> country = countryService.findById(id);
 		if(country.isPresent()) { // doluysa
