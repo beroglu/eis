@@ -10,6 +10,7 @@ public interface CompanyService {
 	
 	List<Company> findAll();
 	Optional<Company> findById(Long id);
+	Optional<Company> findByTaxNumber(String taxNumber);
 	Company save(Company company);
 	Company update(Company company);
 	void delete(Company company);

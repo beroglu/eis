@@ -68,4 +68,10 @@ public class CompanyServiceImpl implements CompanyService {
 		return repository.findByCountry(country);
 	}
 
+	@Override
+	public Optional<Company> findByTaxNumber(String taxNumber) {
+		// TODO Auto-generated method stub
+		return repository.findByTaxNumber(taxNumber);
+	}
+
 }

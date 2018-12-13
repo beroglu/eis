@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
+import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +53,7 @@ public class CompanyController  {
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
+		
 	@RequestMapping(value="/company", method=RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> saveCompany(@RequestBody Company company){
 		try {
@@ -84,6 +80,72 @@ public class CompanyController  {
 		
 	}
 	
+	@RequestMapping(value="/company",method=RequestMethod.PUT,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> updateCompany(@RequestBody Company company ){
+		
+		try {
+			if(StringUtils.isBlank(company.getId()+"")) {
+				return new ResponseEntity<ErrorResponse>(new ErrorResponse("400", "id alanı boş olamaz"),HttpStatus.BAD_REQUEST);
+			}
+			else if(StringUtils.isBlank(company.getName())) {
+				return new ResponseEntity<ErrorResponse>(new ErrorResponse("400", "name alanı boş olamaz"),HttpStatus.BAD_REQUEST);
+			}
+			
+			else if(StringUtils.isBlank(company.getTaxNumber())) {
+				return new ResponseEntity<ErrorResponse>(new ErrorResponse("400", "tax number alanı boş olamaz"),HttpStatus.BAD_REQUEST);
+			}
+			
+			else if(!(countryService.findById(company.getCountry().getId()).isPresent())) {
+				return new ResponseEntity<ErrorResponse>(new ErrorResponse("400", "bu ülkeye ait kayıt bulunmamaktadır ."),HttpStatus.BAD_REQUEST);
+			}
+			
+			Optional<Company> optionalCompany=companyService.findById(company.getId());
+			if(optionalCompany.isPresent()) {
+				
+				if(optionalCompany.get().getTaxNumber().equals(company.getTaxNumber())) {
+					companyService.update(company);
+				}
+				//o kayda ait taxnumber a sahip başka kayıt varmı diye kontrol edilir yoksa güncelleme yapılır
+				else {
+					Optional<Company> optionalCompanyByTaxNo =companyService.findByTaxNumber(company.getTaxNumber());
+					if(optionalCompanyByTaxNo.isPresent()) {
+						return new ResponseEntity<ErrorResponse>(new ErrorResponse("400", "bu tax numarasıyla kayıt bulunmamaktadır ."),HttpStatus.BAD_REQUEST);
+					}
+					else {
+						companyService.update(company);
+					}	
+				}
+					
+					
+			}
+			else {
+				
+				return new ResponseEntity<ErrorResponse>(new ErrorResponse("400", "bu id ye ait kayıt bulunmamaktadır ."),HttpStatus.BAD_REQUEST);
+			}					
+		}			
+		catch (Exception e) {
+			return new ResponseEntity<ErrorResponse>(new ErrorResponse("500", e.getMessage()),HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Company>(company,HttpStatus.OK);
+		
+		
+	}
 	
-	
+	@RequestMapping(value="/company", method=RequestMethod.DELETE)
+	public ResponseEntity<?> deleteCompany(@RequestBody Company company){
+		try {
+			Optional<Company> optionalCompany= companyService.findById(company.getId());
+			if(optionalCompany.isPresent()) {
+				companyService.delete(optionalCompany.get());			
+			}
+			else {
+				return new ResponseEntity<ErrorResponse>(new ErrorResponse("404", "Bu id ile company bulunamadı."), HttpStatus.NOT_FOUND);
+			}
+			
+		} catch (Exception e) {
+			return new ResponseEntity<ErrorResponse>(new ErrorResponse("500", e.getMessage()), HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<SUCCESSFUL>(HttpStatus.OK);
+		
+	}
 }
