@@ -105,7 +105,9 @@ public class CountryController {
 			if(countryOptional.isPresent()) {
 				if(countryOptional.get().getIsoCode().equals(country.getIsoCode())) {
 					countryService.update(country);
-				}else {
+				}
+				
+				else {
 					Optional<Country> countryByIsoCode = countryService.findByIsoCode(country.getIsoCode());
 					if(countryByIsoCode.isPresent()) {
 						return new ResponseEntity<ErrorResponse>(new ErrorResponse("404", "Bu isoCode ait ülke mevcuttur."), HttpStatus.CONFLICT);				
