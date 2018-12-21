@@ -33,7 +33,9 @@ public class Employee extends BaseEntity {
 	private Double salary;
 	private Set<Task> tasks = new HashSet<Task>(0);
 	
-	 @OneToOne(fetch = FetchType.LAZY, optional = false)
+
+
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	 @JoinColumn(name = "title_id", nullable = false)
 	private Title  title;
 	 
@@ -134,9 +136,8 @@ public class Employee extends BaseEntity {
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
-	 
 	
-	
+
 	
 
 }

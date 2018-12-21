@@ -11,7 +11,7 @@ import javax.persistence.TemporalType;
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 	/**@MappedSuperClass notasyonun 
-	 * kullanıldığı sınıflar entitiy olarak sayılmazlar ,
+	 * kullanıldığı sınıflar entity olarak sayılmazlar ,
 	 *  veritabanında tablo olarak karşılıkları olmaz doğal olarakta sorgu yazılmaz.
 	 * 
 	 */

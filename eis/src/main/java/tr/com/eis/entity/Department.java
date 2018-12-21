@@ -1,10 +1,14 @@
 package tr.com.eis.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -14,9 +18,7 @@ import javax.persistence.Table;
 @Table(name="eis_department")
 public class Department extends BaseEntity {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -836413186604611410L;
 	
 	private Long id;
@@ -27,6 +29,22 @@ public class Department extends BaseEntity {
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "manager_id", nullable = false)
     private Employee manager;
+	
+	private Set<Company> companies = new HashSet<Company>(0);
+
+	
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "DEPARTMENT_COMPANY",
+	joinColumns = { @JoinColumn(name = "DEPARTMENT_ID") }, 
+	inverseJoinColumns = { @JoinColumn(name = "COMPANY_ID") })
+	public Set<Company> getCompanies() {
+		return companies;
+	}
+
+	public void setCompanies(Set<Company> companies) {
+		this.companies = companies;
+	}
 
 	public Long getId() {
 		return id;

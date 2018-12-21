@@ -1,9 +1,12 @@
 package tr.com.eis.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 @Entity
 @Table(name="eis_title")
@@ -19,7 +22,8 @@ public class Title extends BaseEntity{
     private Double maxSalary;
     private String definition;
     private String defCode;
-    
+	private Set<Company> companies = new HashSet<Company>(0);
+
     public Long getId() {
 		return id;
 	}
@@ -57,5 +61,16 @@ public class Title extends BaseEntity{
 		this.defCode = defCode;
 	}
 	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "TITLE_COMPANY",
+	joinColumns = { @JoinColumn(name = "TITLE_ID") }, 
+	inverseJoinColumns = { @JoinColumn(name = "COMPANY_ID") })
+	 public Set<Company> getCompanies() {
+		return companies;
+	}
+
+	public void setCompanies(Set<Company> companies) {
+		this.companies = companies;
+	}
 
 }
