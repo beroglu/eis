@@ -1,3 +1,13 @@
 tr\com\eis\entity\BaseEntity.class
+tr\com\eis\service\CountryService.class
+tr\com\eis\service\impl\CompanyServiceImpl.class
+tr\com\eis\service\impl\CountryServiceImpl.class
+tr\com\eis\repository\CompanyRepository.class
+tr\com\eis\controller\CountryController.class
 tr\com\eis\EISApplication.class
+tr\com\eis\controller\CompanyController.class
+tr\com\eis\entity\Company.class
+tr\com\eis\exception\ErrorResponse.class
+tr\com\eis\service\CompanyService.class
+tr\com\eis\repository\CountryRepository.class
 tr\com\eis\entity\Country.class

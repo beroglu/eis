@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: eis
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: Administrator
+Built-By: User
 Implementation-Vendor-Id: tr.com.eis
 Build-Jdk: 1.8.0_171
 Implementation-URL: http://projects.spring.io/spring-boot/eis/
